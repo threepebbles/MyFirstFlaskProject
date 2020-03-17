@@ -42,3 +42,46 @@ def tweet():
 	})
 	
 	return '', 200
+
+
+from flask.json import JSONEncoder
+
+class CustomJSONEncoder(JSONEncoder):
+	def default(self, obj):
+		if isinstance(obj, set):
+			return list(obj)
+		
+		return JSONEncoder.default(self, obj)
+
+
+app.json_encoder = CustomJSONEncoder
+
+
+@app.route('/follow', methods=['POST'])
+def follow():
+	payload		= request.json
+	user_id		= int(payload['id'])
+	user_id_to_follow = int(payload['follow'])
+	
+	if user_id not in app.users or user_id_to_follow not in app.users:
+		return 'wrong user id', 400
+	
+	user = app.users[user_id]
+	user.setdefault('follow', set()).add(user_id_to_follow)
+
+	return jsonify(user)
+
+
+@app.route('/unfollow', methods=['POST'])
+def unfollow():
+	payload = request.json
+	user_id = int(payload['id'])
+	user_id_to_follow = int(payload['unfollow'])
+
+	if user_id not in app.users or user_id_to_follow not in app.users:
+		return 'wrong user id', 400
+	
+	user = app.users[user_id]
+	user.setdefault('follow', set()).discard(user_id_to_follow)
+
+	return jsonify(user)
