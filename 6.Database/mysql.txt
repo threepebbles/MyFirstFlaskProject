@@ -6,6 +6,7 @@ test1234
 ALTER user 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'test1234';
 
 
+*데이터베이스 생성
 CREATE DATABASE miniter;
 
 USE miniter;
@@ -41,7 +42,8 @@ CREATE TABLE tweets(
 	CONSTRAINT tweets_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-*생성된 테이블 확인
+
+*생성된 테이블확인
 show tables;
 explain [테이블명];
 
