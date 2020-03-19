@@ -6,6 +6,7 @@ from flask.json import JSONEncoder
 from sqlalchemy import create_engine, text
 from datetime   import datetime, timedelta
 from functools  import wraps
+from flask_cors import CORS
 
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
@@ -136,6 +137,9 @@ def login_required(f):
 
 def create_app(test_config = None):
     app = Flask(__name__)
+	
+	# pip install flask-cors
+    CORS(app)
 
     app.json_encoder = CustomJSONEncoder
 
@@ -221,6 +225,16 @@ def create_app(test_config = None):
 
     @app.route('/timeline/<int:user_id>', methods=['GET'])
     def timeline(user_id):
+        return jsonify({
+            'user_id'  : user_id,
+            'timeline' : get_timeline(user_id)
+        })
+	
+    @app.route('/timeline', methods=['GET'])
+    @login_required
+    def user_timeline():
+        user_id = g.user_id
+
         return jsonify({
             'user_id'  : user_id,
             'timeline' : get_timeline(user_id)
