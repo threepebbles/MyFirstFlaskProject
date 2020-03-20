@@ -197,7 +197,7 @@ def test_unfollow(api):
     # follow 유저 아이디 = 2
     resp  = api.post(
         '/follow',
-        data         = json.dumps({'id: 1,'follow' : 2}),
+        data         = json.dumps({'id': 1,'follow' : 2}),
         content_type = 'application/json',
         headers      = {'Authorization' : access_token}
     )
