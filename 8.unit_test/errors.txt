@@ -1,0 +1,2 @@
+Don't use Korean name in user table in miniter database. It causes sqlalchemy.exc error.
+
