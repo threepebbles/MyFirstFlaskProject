@@ -24,13 +24,13 @@ def setup_function():
     new_users = [
         {
             'id'              : 1,
-            'name'            : '송은우',
+            'name'            : 'heiler',
             'email'           : 'songew@gmail.com',
             'profile'         : 'test profile',
             'hashed_password' : hashed_password
         }, {
             'id'              : 2,
-            'name'            : '김철수',
+            'name'            : 'heiler2',
             'email'           : 'tet@gmail.com',
             'profile'         : 'test profile',
             'hashed_password' : hashed_password
@@ -163,7 +163,7 @@ def test_follow(api):
     # follow 유저 아이디 = 2
     resp  = api.post(
         '/follow',
-        data         = json.dumps({'id': 1,'follow' : 2}),
+        data         = json.dumps({'follow' : 2}),
         content_type = 'application/json',
         headers      = {'Authorization' : access_token}
     )
@@ -197,7 +197,7 @@ def test_unfollow(api):
     # follow 유저 아이디 = 2
     resp  = api.post(
         '/follow',
-        data         = json.dumps({'id': 1,'follow' : 2}),
+        data         = json.dumps({'follow' : 2}),
         content_type = 'application/json',
         headers      = {'Authorization' : access_token}
     )
